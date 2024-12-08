@@ -42,6 +42,37 @@ class Field {
         );
     };
 
+    // let user set the game height and width
+    gameSet() {
+        // map width setting
+        while (true) {
+        this.cols = parseInt(prompt("Please enter board width between 5 and 20: "))
+        
+            if (typeof this.cols !== 'number')
+                console.log("Please enter a number between 5 and 20.");
+            else if (this.cols < 5)
+                console.log("Please enter a number 5 and greater.");
+            else if (this.cols > 20)
+                console.log("Please enter a number 20 and smaller.");
+            else
+                break;
+        }
+
+        // map height setting
+        while (true) {
+            this.rows = parseInt(prompt("Please enter board height between 5 and 20: "))
+            
+                if (typeof this.rows !== 'number')
+                    console.log("Please enter a number between 5 and 20.");
+                else if (this.rows < 5)
+                    console.log("Please enter a number 5 and greater.");
+                else if (this.rows > 20)
+                    console.log("Please enter a number 20 and smaller.");
+                else
+                    break;
+            }
+    }
+
     // generate the game field
     generateField() {
 
@@ -93,6 +124,7 @@ class Field {
 
     // start game
     startGame() {
+        this.gameSet();
         this.gamePlay = true;
         this.generateField(this.rows, this.cols);
         this.printField()
@@ -116,6 +148,8 @@ class Field {
                 case "s":
                 case "e":
                 case "w":
+                    // erase character footprint
+                    this.field[this.playerY][this.playerX] = GRASS;
                     // update player location on board
                     this.updatePlayer(userInput.toLowerCase());
                     this.field[this.playerY][this.playerX] = PLAYER;                                                           
@@ -189,9 +223,6 @@ class Field {
 Field.welcomeMsg(WELCOME);
 
 // generate new field
-const ROWS = 10
-const COLS = 10
-const field = new Field(ROWS, COLS);
+const field = new Field(Field.rows, Field.cols);
 
 field.startGame();
-
